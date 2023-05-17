@@ -1,5 +1,6 @@
 package com.example.intent
 
+import android.app.SearchManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -32,8 +33,11 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "連結FB", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+            var it = Intent(Intent.ACTION_VIEW)
+            it.data = Uri.parse("https://www.facebook.com")
+            startActivity(it)
         }
     }
 
@@ -58,8 +62,25 @@ class MainActivity : AppCompatActivity() {
                 it.data = Uri.parse("http://www1.pu.edu.tw/~tcyang")
                 startActivity(it)
             }
+
             R.id.email -> {
                 Toast.makeText(this, "寄信", Toast.LENGTH_SHORT).show()
+                var it = Intent(Intent.ACTION_SENDTO)
+                it.data = Uri.parse("mailto:tcyang@gm.pu.edu.tw")
+                startActivity(it)
+            }
+
+            R.id.search -> {
+                var it = Intent(Intent.ACTION_WEB_SEARCH)
+                it.putExtra(SearchManager.QUERY, "楊子青")
+                startActivity(it)
+            }
+
+            R.id.map -> {
+                Toast.makeText(this, "開啟地圖", Toast.LENGTH_SHORT).show()
+                var it = Intent(Intent.ACTION_VIEW)
+                it.data = Uri.parse("geo:24.2267756,120.5771591?q=餐廳")
+                startActivity(it)
             }
         }
         return true
